@@ -173,7 +173,7 @@ async def download(bot: Client, message: types.Message, start_index=0, end_index
                     "height": height,
                     "chat_id": user["log_channel"] or message.chat.id,
                     }
-            else:
+        else:
              func = bot.send_document
              kwargs = {
                     "chat_id": user["log_channel"] or message.chat.id,
