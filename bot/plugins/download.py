@@ -157,8 +157,8 @@ async def download(bot: Client, message: types.Message, start_index=0, end_index
     
             try:
                 width, height, duration = await get_video_details(output_path)
-                except ValueError as e:
-            await edit_func.edit(f"Error extracting video details: {str(e)}")
+            except ValueError as e:
+                await edit_func.edit(f"Error extracting video details: {str(e)}")
                     cleanup(output_path, thumbnail, user_id)
             continue
             except Exception as e:
