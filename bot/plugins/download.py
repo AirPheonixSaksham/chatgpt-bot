@@ -152,8 +152,35 @@ async def download(bot: Client, message: types.Message, start_index=0, end_index
                     thumbnail = await bot.download_media(user["thumbnail"])
                 else:
                     thumbnail = None
-
             if drm_ext == "mp4" and output_path.endswith(".mp4"):
+             func = bot.send_video
+    
+                try:
+                    width, height, duration = await get_video_details(output_path)
+                except ValueError as e:
+            await edit_func.edit(f"Error extracting video details: {str(e)}")
+                    cleanup(output_path, thumbnail, user_id)
+            continue
+            except Exception as e:
+            await edit_func.edit(f"Unexpected error: {str(e)}")
+            cleanup(output_path, thumbnail, user_id)
+            continue
+
+            kwargs = {
+                    "video": output_path,
+                    "duration": duration,
+                    "width": width,
+                    "height": height,
+                    "chat_id": user["log_channel"] or message.chat.id,
+                    }
+            else:
+             func = bot.send_document
+            kwargs = {
+                    "chat_id": user["log_channel"] or message.chat.id,
+                    "document": output_path
+                    }
+
+           ''' if drm_ext == "mp4" and output_path.endswith(".mp4"):
                 func = bot.send_video
                 width, height, duration = await get_video_details(output_path)
                 kwargs = {
@@ -161,7 +188,7 @@ async def download(bot: Client, message: types.Message, start_index=0, end_index
                     "duration": duration,
                     "width": width,
                     "height": height,
-                    "chat_id": user["log_channel"] or message.chat.id,
+                    "chat_id": user["log_channel"] or message.chat.id,'''
                 }
             else:
                 func = bot.send_document
