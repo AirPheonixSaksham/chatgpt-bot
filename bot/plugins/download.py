@@ -160,11 +160,11 @@ async def download(bot: Client, message: types.Message, start_index=0, end_index
             except ValueError as e:
                 await edit_func.edit(f"Error extracting video details: {str(e)}")
                 cleanup(output_path, thumbnail, user_id)
-            continue
+                continue
             except Exception as e:
-            await edit_func.edit(f"Unexpected error: {str(e)}")
-            cleanup(output_path, thumbnail, user_id)
-            continue
+                await edit_func.edit(f"Unexpected error: {str(e)}")
+                cleanup(output_path, thumbnail, user_id)
+                continue
 
             kwargs = {
                     "video": output_path,
@@ -175,10 +175,10 @@ async def download(bot: Client, message: types.Message, start_index=0, end_index
                     }
             else:
              func = bot.send_document
-            kwargs = {
+             kwargs = {
                     "chat_id": user["log_channel"] or message.chat.id,
                     "document": output_path
-                    }
+                }
 
            ''' if drm_ext == "mp4" and output_path.endswith(".mp4"):
                 func = bot.send_video
