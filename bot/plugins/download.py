@@ -155,8 +155,8 @@ async def download(bot: Client, message: types.Message, start_index=0, end_index
             if drm_ext == "mp4" and output_path.endswith(".mp4"):
              func = bot.send_video
     
-                try:
-                    width, height, duration = await get_video_details(output_path)
+            try:
+                width, height, duration = await get_video_details(output_path)
                 except ValueError as e:
             await edit_func.edit(f"Error extracting video details: {str(e)}")
                     cleanup(output_path, thumbnail, user_id)
